@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/AntiPattern/AntiPattern.iml" filepath="$PROJECT_DIR$/AntiPattern/AntiPattern.iml" />
       <module fileurl="file://$PROJECT_DIR$/Optional1/Optional1.iml" filepath="$PROJECT_DIR$/Optional1/Optional1.iml" />
       <module fileurl="file://$PROJECT_DIR$/Optional2/Optional2.iml" filepath="$PROJECT_DIR$/Optional2/Optional2.iml" />
       <module fileurl="file://$PROJECT_DIR$/Optional3/Optional3.iml" filepath="$PROJECT_DIR$/Optional3/Optional3.iml" />
