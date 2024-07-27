@@ -41,4 +41,8 @@ public class ProductController {
         productDto.setId(id);
         return simpleProductService.update(productDto);
     }
+    @RequestMapping(value="/products/{id}", method = RequestMethod.DELETE)
+    public void deleteProduct(@PathVariable Long id) {
+        simpleProductService.delete(id);
+    }
 }
