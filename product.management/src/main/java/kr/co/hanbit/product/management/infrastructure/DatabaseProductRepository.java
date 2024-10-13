@@ -1,6 +1,7 @@
 package kr.co.hanbit.product.management.infrastructure;
 
 import kr.co.hanbit.product.management.domain.Product;
+import kr.co.hanbit.product.management.domain.ProductRepository;
 import kr.co.hanbit.product.management.presentation.ProductController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -17,7 +18,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Repository
-public class DatabaseProductRepository {
+public class DatabaseProductRepository implements ProductRepository {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
