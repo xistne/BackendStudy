@@ -1,6 +1,6 @@
-package kr.co.shortenurlservice.domain;
+package kr.co.shortenurlservice.presentation;
 
-public class ShortenUrl {
+public class ShortenUrlInformationDto {
     private String originalUrl;
     private String shortenUrlKey;
     private Long redirectCount;
