@@ -1,5 +1,7 @@
 package kr.co.shortenurlservice.application;
 
+import kr.co.shortenurlservice.domain.LackOfShortenUrlKeyException;
+import kr.co.shortenurlservice.domain.NotFoundShortenUrlException;
 import kr.co.shortenurlservice.domain.ShortenUrl;
 import kr.co.shortenurlservice.domain.ShortenUrlRepository;
 import kr.co.shortenurlservice.presentation.ShortenUrlCreateRequestDto;
@@ -22,7 +24,7 @@ public class SimpleShortenUrlService {
     ) {
         // 1. 단축 url 키 생성
         String originalUrl = shortenUrlCreateRequestDto.getOriginalUrl();
-        String shortenUrlKey = ShortenUrl.generateShortenUrlKey();
+        String shortenUrlKey = getUniqueShortenUrlKey();
 
         // 2. 원래의 URL과 단축 url키를 통해 ShortenUrl 도메인 객체 생성
         ShortenUrl shortenUrl = new ShortenUrl(originalUrl, shortenUrlKey);
@@ -38,6 +40,9 @@ public class SimpleShortenUrlService {
 
     public ShortenUrlInformationDto getShortenUrlInformationByShortenUrlKey(String shortenUrlKey) {
         ShortenUrl shortenUrl = shortenUrlRepository.findShortenUrlByShortenUrlKey(shortenUrlKey);
+        if (null == shortenUrl) {
+            throw new NotFoundShortenUrlException();
+        }
         ShortenUrlInformationDto shortenUrlInformationDto = new ShortenUrlInformationDto(shortenUrl);
 
         return shortenUrlInformationDto;
@@ -46,11 +51,29 @@ public class SimpleShortenUrlService {
     public String getOriginalUrlByShortenUrlKey(String shortenUrlKey) {
         ShortenUrl shortenUrl = shortenUrlRepository.findShortenUrlByShortenUrlKey(shortenUrlKey);
 
+        if (null == shortenUrl) {
+            throw new NotFoundShortenUrlException();
+        }
         shortenUrl.increaseRedirectCount();
         shortenUrlRepository.saveShortenUrl(shortenUrl);
 
         String originalUrl = shortenUrl.getOriginalUrl();
 
         return originalUrl;
+    }
+
+    private String getUniqueShortenUrlKey() {
+        final int MAX_RETRY_COUNT = 5;
+        int count = 0;
+
+        while (count++ < MAX_RETRY_COUNT) {
+            String shortenUrlKey = ShortenUrl.generateShortenUrlKey();
+            ShortenUrl shortenUrl = shortenUrlRepository.findShortenUrlByShortenUrlKey(shortenUrlKey);
+
+            if(null == shortenUrl) {
+                return shortenUrlKey;
+            }
+        }
+        throw new LackOfShortenUrlKeyException();
     }
 }
