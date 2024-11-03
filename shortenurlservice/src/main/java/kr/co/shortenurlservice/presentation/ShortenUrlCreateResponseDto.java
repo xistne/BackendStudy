@@ -6,6 +6,9 @@ public class ShortenUrlCreateResponseDto {
     private String originalUrl;
     private String shortenUrlKey;
 
+    public ShortenUrlCreateResponseDto() {
+    }
+
     public ShortenUrlCreateResponseDto(ShortenUrl shortenUrl) {
         this.originalUrl = shortenUrl.getOriginalUrl();
         this.shortenUrlKey = shortenUrl.getShortenUrlKey();
