@@ -21,7 +21,7 @@ public class ShortenUrlRestController {
         this.simpleShortenUrlService = simpleShortenUrlService;
     }
 
-    @RequestMapping(value = "/shortenUrl", method = RequestMethod.GET)
+    @RequestMapping(value = "/shortenUrl", method = RequestMethod.POST)
     public ResponseEntity<ShortenUrlCreateResponseDto> createShortenUrl(
             @Valid @RequestBody ShortenUrlCreateRequestDto shortenUrlCreateRequestDto
     ) {
